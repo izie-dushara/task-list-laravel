@@ -2,9 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Defines a route for the root URL ('/'). When accessed, it returns 'Main Page'.
+// Defines a route for the root URL ('/'). When accessed, it returns the 'index' view.
+// The 'index' view is provided with two variables: 'name' and 'nameHtml'.
+// The 'name' variable will be displayed with escaped output (to prevent HTML injection).
+// The 'nameHtml' variable contains a string with HTML that will be escaped when printed using Blade syntax.
 Route::get('/', function () {
-    return 'Main Page';
+    return view('index', [
+        'name' => 'Izie',
+        // This contains HTML that will be escaped when displayed.
+        'nameHtml' => 'Izie</br>'
+    ]);
 });
 
 // Defines a route for '/xxx'. When accessed, it returns 'hello'.
