@@ -22,7 +22,8 @@
         <div>
             <label for="title">Title</label>
             {{-- Input field for entering the task's title --}}
-            <input type="text" name="title" id="title">
+            {{-- Use old() to repopulate the form field if validation fails --}}
+            <input type="text" name="title" id="title" value="{{ old('title') }}">
             {{-- Display an error message if validation fails for the title --}}
             @error('title')
                 <p class="error-message">{{ $message }}</p>
@@ -32,7 +33,7 @@
         <div>
             <label for="description">Description</label>
             {{-- Textarea for entering a short description of the task --}}
-            <textarea name="description" id="description" rows="5"></textarea>
+            <textarea name="description" id="description" rows="5">{{ old('description') }}</textarea>
             {{-- Display an error message if validation fails for the description --}}
             @error('description')
                 <p class="error-message">{{ $message }}</p>
@@ -42,7 +43,7 @@
         <div>
             <label for="long_description">Long Description</label>
             {{-- Textarea for entering a detailed, longer description of the task --}}
-            <textarea name="long_description" id="long_description" rows="10"></textarea>
+            <textarea name="long_description" id="long_description" rows="10">{{ old('long_description') }}</textarea>
             {{-- Display an error message if validation fails for the long description --}}
             @error('long_description')
                 <p class="error-message">{{ $message }}</p>
