@@ -3,15 +3,6 @@
 @section('title', 'The list of tasks')
 
 @section('content')
-    {{--
-    Alternative code using an @if statement:
-    This code checks if the $tasks array has any elements.
-    If the count of $tasks is greater than zero, it will execute the block of code within the @if.
-    This is an alternative to @forelse, which we will explain below.
-
-    @if (count($tasks))
-    --}}
-
     {{-- The @forelse directive iterates over $tasks, similar to @foreach, but it also handles the case where the array is empty. --}}
     @forelse ($tasks as $task)
         <div>
@@ -26,9 +17,9 @@
         <div>There are no tasks!</div>
     @endforelse
 
-    {{--
-    End of the alternative code using @if.
-    In this approach, you would manually handle displaying the empty state (i.e., no tasks).
+    {{-- If there are tasks, display pagination links --}}
+    @if ($tasks->count())
+        <nav>{{ $tasks->links() }}</nav>
     @endif
-    --}}
+
 @endsection

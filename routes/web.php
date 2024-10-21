@@ -14,7 +14,7 @@ Route::get('/', function () {
 Route::get('/tasks', function () {
     // Fetches all tasks ordered by creation date (newest first) and displays them
     return view('index', [
-        'tasks' => Task::latest()->get(), // Alternative: 'Task::all()' fetches all tasks without ordering them
+        'tasks' => Task::latest()->paginate(10), // Alternative: 'Task::all()' fetches all tasks without ordering them
     ]);
 })->name('tasks.index');
 
