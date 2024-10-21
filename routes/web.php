@@ -67,6 +67,15 @@ Route::delete('/tasks/{task}', function (Task $task) {
         ->with('success', 'Task deleted successfully!');
 })->name('tasks.destroy');
 
+// Route to toggle the 'completed' status of a task by its ID
+Route::put('tasks/{task}/toggle-complete', function (Task $task) {
+    // Call the 'toggleComplete' method on the task to flip its 'completed' status
+    $task->toggleComplete();
+
+    // Redirect back to the previous page and display a success message
+    return redirect()->back()->with('success', 'Task updated successfully');
+})->name('task.toggle-complete');
+
 // Fallback route for undefined URLs
 Route::fallback(function () {
     // Return a simple "Page not found" message for any invalid route

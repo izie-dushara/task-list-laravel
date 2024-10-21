@@ -3,6 +3,9 @@
 @section('title', 'The list of tasks')
 
 @section('content')
+<div>
+    <a href="{{ route('tasks.create') }}">Add Task!</a>
+</div>
     {{-- The @forelse directive iterates over $tasks, similar to @foreach, but it also handles the case where the array is empty. --}}
     @forelse ($tasks as $task)
         <div>
