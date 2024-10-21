@@ -16,7 +16,7 @@
     @forelse ($tasks as $task)
         <div>
             {{-- Create a clickable link for each task that leads to the route 'tasks.show' and passes the task ID as a parameter --}}
-            <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
+            <a href="{{ route('tasks.show', ['task' => $task->id]) }}">
                 {{-- Display the title of the task --}}
                 {{ $task->title }}
             </a>

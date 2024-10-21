@@ -21,21 +21,21 @@ Route::get('/tasks', function () {
 // Route to show the task creation form at '/tasks/create'
 Route::view('/tasks/create', 'create')->name('tasks.create');
 
-// Route to display a specific task by its ID at '/tasks/{id}'
-Route::get('/tasks/{id}', function ($id) {
-    return view('show', [
-        // Find the task by its ID or throw a 404 error if it doesn't exist
-        'task' => Task::findOrFail($id)
-    ]);
-})->name('tasks.show');
-
-// Route to show the task edit form by its ID at '/tasks/{id}/edit'
-Route::get('/tasks/{id}/edit', function ($id) {
+// Route to show the task edit form by its ID at '/tasks/{task}/edit'
+Route::get('/tasks/{task}/edit', function (Task $task) {
+    // Display the edit view with the task found by ID
     return view('edit', [
-        // Find the task by its ID or throw a 404 error if it doesn't exist
-        'task' => Task::findOrFail($id)
+        'task' => $task
     ]);
 })->name('tasks.edit');
+
+// Route to display a specific task by its ID at '/tasks/{task}'
+Route::get('/tasks/{task}', function (Task $task) {
+    // Show a single task's details by its ID
+    return view('show', [
+        'task' => $task
+    ]);
+})->name('tasks.show');
 
 // Route to handle form submissions for creating a new task at '/tasks'
 Route::post('/tasks', function (Request $request) {
@@ -55,13 +55,13 @@ Route::post('/tasks', function (Request $request) {
     // Save the task to the database
     $task->save();
 
-    // Redirect to the newly created task's page, with a success message
-    return redirect()->route('tasks.show', ['id' => $task->id])
+    // Redirect to the newly created task's page with a success message
+    return redirect()->route('tasks.show', ['task' => $task->id])
         ->with('success', 'Task created successfully!');
 })->name('tasks.store');
 
-// Route to handle updating a specific task by its ID at '/tasks/{id}'
-Route::put('/tasks/{id}', function ($id, Request $request) {
+// Route to handle updating a specific task by its ID at '/tasks/{task}'
+Route::put('/tasks/{task}', function (Task $task, Request $request) {
     // Validate the submitted form data
     $data = $request->validate([
         'title' => 'required|max:255',         // Ensure the title is present and has a maximum length of 255 characters
@@ -69,8 +69,7 @@ Route::put('/tasks/{id}', function ($id, Request $request) {
         'long_description' => 'required',      // Ensure a detailed description is provided
     ]);
 
-    // Find the task by its ID and update it with the validated data
-    $task = Task::findOrFail($id);
+    // Update the task with the validated data
     $task->title = $data['title'];
     $task->description = $data['description'];
     $task->long_description = $data['long_description'];
@@ -78,13 +77,13 @@ Route::put('/tasks/{id}', function ($id, Request $request) {
     // Save the updated task to the database
     $task->save();
 
-    // Redirect to the updated task's page, with a success message
-    return redirect()->route('tasks.show', ['id' => $task->id])
+    // Redirect to the updated task's page with a success message
+    return redirect()->route('tasks.show', ['task' => $task->id])
         ->with('success', 'Task updated successfully!');
 })->name('tasks.update');
 
-// Fallback route for any undefined URLs
-// Returns a "Page not found" message for invalid routes
+// Fallback route for undefined URLs
 Route::fallback(function () {
+    // Return a simple "Page not found" message for invalid routes
     return 'Page not found';
 });

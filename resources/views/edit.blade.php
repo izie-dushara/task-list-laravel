@@ -15,7 +15,7 @@
 @section('content')
     {{-- Task editing form --}}
 
-    <form method="POST" action="{{ route('tasks.update', ['id' => $task->id]) }}">
+    <form method="POST" action="{{ route('tasks.update', ['task' => $task->id]) }}">
         @csrf
         {{-- CSRF token for security to prevent cross-site request forgery attacks --}}
         @method('PUT')
