@@ -3,14 +3,14 @@
 @section('title', 'The list of tasks')
 
 @section('content')
-<div>
-    <a href="{{ route('tasks.create') }}">Add Task!</a>
-</div>
+    <nav class="mb-4">
+        <a href="{{ route('tasks.create') }}" class="link">Add Task!</a>
+    </nav>
     {{-- The @forelse directive iterates over $tasks, similar to @foreach, but it also handles the case where the array is empty. --}}
     @forelse ($tasks as $task)
         <div>
             {{-- Create a clickable link for each task that leads to the route 'tasks.show' and passes the task ID as a parameter --}}
-            <a href="{{ route('tasks.show', ['task' => $task->id]) }}">
+            <a href="{{ route('tasks.show', ['task' => $task->id]) }}" @class(['line-through' => $task->completed])>
                 {{-- Display the title of the task --}}
                 {{ $task->title }}
             </a>
@@ -22,7 +22,7 @@
 
     {{-- If there are tasks, display pagination links --}}
     @if ($tasks->count())
-        <nav>{{ $tasks->links() }}</nav>
+        <nav class="mt-4">{{ $tasks->links() }}</nav>
     @endif
 
 @endsection
